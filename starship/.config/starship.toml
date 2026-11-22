@@ -1,0 +1,54 @@
+# ==============================================================================
+# Starship Minimal & Fast Prompt Configuration
+# ==============================================================================
+
+# Karakter prompt
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$package\
+$golang\
+$rust\
+$nodejs\
+$python\
+$line_break\
+$character"""
+
+# Timeout eksekusi modul (ms)
+command_timeout = 500
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+format = '([$all_status$ahead_behind]($style) )'
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[golang]
+symbol = " "
+style = "bold cyan"
+
+[rust]
+symbol = " "
+style = "bold red"
+
+[python]
+symbol = " "
+style = "bold yellow"

@@ -1,0 +1,41 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Secrets & Local credentials
+*.local
+*.local.zsh
+.env
+.env.*
+!.env.example
+secrets.yaml
+id_rsa*
+*.pem
+*.key
+
+# Editor swap & temporary files
+*.swp
+*.swo
+*~
+*.orig
+.netrwhist
+
+# Neovim plugin state / caches
+.config/nvim/lazy-lock.json.bak
+undo/
+view/
+spell/*.add.spl
+
+# Tmux temporary / local sockets
+.tmux/plugins/
+!.tmux/plugins/.gitkeep
+
+# History files
+.zsh_history
+.bash_history
+.node_repl_history
