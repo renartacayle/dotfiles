@@ -17,16 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     spec = {
-        -- Starter Plugins
-        { "folke/which-key.nvim", event = "VeryLazy" },
-        {
-            "catppuccin/nvim",
-            name = "catppuccin",
-            priority = 1000,
-            config = function()
-                vim.cmd.colorscheme("catppuccin-mocha")
-            end,
-        },
+        { import = "plugins" },
     },
     defaults = {
         lazy = false,

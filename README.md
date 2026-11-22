@@ -1,37 +1,60 @@
-# ⚙️ Dotfiles & Developer Environment
+# ⚙️ Dotfiles & Modern Developer Environment
 
-Repository konfigurasi lingkungan pengembangan modular, idempoten, dan modern berbasis **GNU Stow**, **Neovim (Lua + lazy.nvim)**, **Tmux (TPM + TrueColor)**, **Zsh + Starship**, dan skrip installer otomatis.
+Repository konfigurasi lingkungan pengembangan modular, idempoten, dan modern berbasis **GNU Stow**, **Neovim (Lua + lazy.nvim + Mason LSP + Treesitter)**, **Tmux (TPM + TrueColor)**, **Zsh + Starship**, **Hyprland Wayland Compositor (Waybar + Kitty + Rofi)**, serta **Automated Docker Test Harness & CI**.
 
 ---
 
-## 📂 Struktur Direktori Modular
+## 📂 Struktur Direktori Lengkap
 
-Repository ini menggunakan paradigma *package-based* GNU Stow, di mana setiap modul terisolasi dan dapat di-*stow* secara independen:
+Repository ini dirancang secara modular menggunakan paradigma *package-based* GNU Stow. Setiap modul terisolasi penuh:
 
 ```text
 dotfiles/
-├── nvim/                      # Modul Neovim
+├── .github/workflows/
+│   └── ci.yml                 # CI: ShellCheck linter & Docker clean install verification
+├── tests/
+│   ├── Dockerfile             # Clean Ubuntu 24.04 test environment
+│   └── run_test.sh            # Local test runner (Docker / Podman)
+├── scripts/
+│   ├── install.sh             # Idempotent cross-distro bootstrap installer
+│   ├── backup.sh              # Safe backup (zero overwrite/data-loss)
+│   └── stow.sh                # Wrapper symlink GNU Stow
+├── nvim/                      # Modul Neovim IDE
 │   └── .config/nvim/
 │       ├── init.lua           # Entrypoint utama
-│       └── lua/config/
-│           ├── options.lua    # Setting editor & indentasi
-│           ├── keymaps.lua    # Pintasan keyboard ergonomis
-│           └── lazy.lua       # Bootstrap & setup lazy.nvim
-├── tmux/                      # Modul Multiplexer Tmux
+│       └── lua/
+│           ├── config/        # Options, keymaps, lazy.nvim bootstrap
+│           └── plugins/
+│               ├── lsp.lua          # Mason, Mason-LSPConfig, Neovim LSPConfig
+│               ├── completion.lua   # nvim-cmp, LuaSnip, friendly-snippets
+│               ├── treesitter.lua   # AST syntax highlighting & incremental selection
+│               ├── telescope.lua    # Fuzzy finder (files, grep, buffers, diagnostics)
+│               ├── ui.lua           # Lualine, Gitsigns, Oil.nvim, Autopairs
+│               └── colorscheme.lua  # Catppuccin Mocha theme & Which-key
+├── tmux/                      # Modul Multiplexer Terminal
 │   └── .config/tmux/
-│       └── tmux.conf          # Prefix C-a, truecolor, & vim-keys
+│       └── tmux.conf          # Prefix C-a, 24-bit TrueColor, vim-keys, & TPM
 ├── zsh/                       # Modul Shell Zsh
-│   ├── .zshrc                 # Konfigurasi shell & history
+│   ├── .zshrc                 # History optimization, compinit, & zoxide
 │   └── .config/zsh/
-│       ├── aliases.zsh        # Git, navigation, & CLI alias
+│       ├── aliases.zsh        # Modern CLI shortcuts (eza, git, dotfiles)
 │       └── env.zsh            # PATH & Environment variables
-├── starship/                  # Modul Prompt Terminal
-│   └── .config/starship.toml  # Minimalist & blazingly fast prompt
-├── scripts/                   # Automasi & Bootstrap
-│   ├── install.sh             # Skrip instalasi lintas-distro idempoten
-│   ├── backup.sh              # Skrip pencadangan aman (zero data loss)
-│   └── stow.sh                # Wrapper manajemen symlink GNU Stow
-└── .gitignore                 # Filter file rahasia, history, & temporary
+├── starship/                  # Modul Cross-shell Prompt
+│   └── .config/starship.toml  # Minimalist & blazingly fast status prompt
+├── kitty/                     # Modul Terminal Emulator GPU
+│   └── .config/kitty/
+│       └── kitty.conf         # JetBrainsMono Nerd Font & Catppuccin styling
+├── hypr/                      # Modul Wayland Window Manager
+│   └── .config/hypr/
+│       └── hyprland.conf      # Smooth bezier animations, vim navigation & dual gaps
+├── waybar/                    # Modul Top Bar Desktop
+│   └── .config/waybar/
+│       ├── config.jsonc       # Modules: workspaces, clock, audio, battery, tray
+│       └── style.css          # Catppuccin glassmorphism theme
+├── rofi/                      # Modul Application Launcher
+│   └── .config/rofi/
+│       └── config.rasi        # Modern modal app/window switcher
+└── .gitignore                 # Filter secrets, swap files, & temporary states
 ```
 
 ---
@@ -45,29 +68,17 @@ cd ~/dotfiles
 ```
 
 ### 2. Jalankan Bootstrap Otomatis
-Skrip `install.sh` akan mendeteksi distro Linux secara otomatis, memasang paket pendukung, mencadangkan file lama ke `~/.dotfiles_backup/`, dan menghubungkan seluruh dotfiles via GNU Stow:
+Skrip `install.sh` mendeteksi distro Linux otomatis (Arch, Ubuntu/Debian, Fedora, SUSE), memasang paket pendukung, mencadangkan file lama ke `~/.dotfiles_backup/`, dan menghubungkan konfigurasi via GNU Stow:
 
 ```bash
 chmod +x scripts/*.sh
 ./scripts/install.sh
 ```
 
-> **Mode Non-Interaktif:** Untuk setup server atau container tanpa prompt interaktif, gunakan:
+> **Mode Non-Interaktif:** Untuk setup server atau container tanpa prompt interaktif:
 > ```bash
 > ./scripts/install.sh -y
 > ```
-
----
-
-## 🛡️ Mekanisme Cadangan Aman (`backup.sh`)
-
-Sebelum tautan symlink dibuat, `scripts/backup.sh` otomatis mendeteksi file konfigurasi yang sudah ada di sistem dan memindahkannya ke direktori timestamp:
-
-```text
-~/.dotfiles_backup/backup_YYYYMMDD_HHMMSS/
-```
-
-Konfigurasi lama Anda **tidak akan pernah ditimpa atau dihapus secara permanen**.
 
 ---
 
@@ -77,7 +88,8 @@ Gunakan wrapper `scripts/stow.sh` untuk mengelola modul secara parsial atau meny
 
 | Perintah | Deskripsi |
 | :--- | :--- |
-| `./scripts/stow.sh all` | Menghubungkan seluruh modul core (`nvim`, `tmux`, `zsh`, `starship`) |
+| `./scripts/stow.sh all` | Menghubungkan modul core terminal (`nvim`, `tmux`, `zsh`, `starship`) |
+| `./scripts/stow.sh desktop` | Menghubungkan seluruh modul termasuk desktop (`hypr`, `waybar`, `kitty`, `rofi`) |
 | `./scripts/stow.sh nvim` | Hanya menghubungkan konfigurasi Neovim |
 | `./scripts/stow.sh tmux` | Hanya menghubungkan konfigurasi Tmux |
 | `./scripts/stow.sh -R all` | **Restow / Re-link** seluruh paket jika ada file baru |
@@ -85,17 +97,31 @@ Gunakan wrapper `scripts/stow.sh` untuk mengelola modul secara parsial atau meny
 
 ---
 
+## 🧪 Validasi Clean Install (Test Harness)
+
+Uji instalasi di container Ubuntu 24.04 bersih sebelum menjalankan di mesin utama:
+
+```bash
+chmod +x tests/run_test.sh
+./tests/run_test.sh
+```
+
+---
+
 ## ⌨️ Rangkuman Pintasan Kunci Utama
 
-### Neovim
+### Neovim IDE
 * `<Space>` — **Leader Key**
-* `<leader>w` — Simpan file (`:w`)
-* `<leader>q` — Keluar editor (`:q`)
+* `<leader>ff` — Cari berkas (*Find Files*) via Telescope
+* `<leader>fg` — Pencarian teks mendalam (*Live Grep*) via Telescope
+* `<leader>e` / `-` — Buka file manager interaktif (*Oil.nvim*)
+* `gd` / `gr` — Lompat ke definisi / referensi fungsi (LSP)
+* `K` — Tampilkan dokumentasi hover tipe data (LSP)
+* `<leader>ca` — Tindakan kode (*Code Action*)
+* `<leader>cf` — Format berkas otomatis (*Format Buffer*)
 * `<C-h>`, `<C-j>`, `<C-k>`, `<C-l>` — Pindah fokus window/split
-* `J` / `K` (Visual mode) — Geser blok baris ke atas / ke bawah
-* `<C-d>`, `<C-u>` — Scroll setengah halaman dengan kursor tetap di tengah layar
 
-### Tmux
+### Tmux Multiplexer
 * `Ctrl-a` — **Prefix Key** (menggantikan default `Ctrl-b`)
 * `Prefix + |` — Split window secara horizontal
 * `Prefix + -` — Split window secara vertikal
@@ -103,12 +129,11 @@ Gunakan wrapper `scripts/stow.sh` untuk mengelola modul secara parsial atau meny
 * `Prefix + r` — Reload konfigurasi tmux seketika
 * `Prefix + I` — Install plugin via TPM
 
----
-
-## 💡 Ekstensi Lanjutan (Next Step)
-Untuk menambahkan modul GUI / Window Manager (seperti **Hyprland**, **Waybar**, atau **Kitty**), buat folder baru dengan struktur mirroring `$HOME`:
-```bash
-mkdir -p hypr/.config/hypr
-touch hypr/.config/hypr/hyprland.conf
-./scripts/stow.sh hypr
-```
+### Hyprland Wayland WM
+* `SUPER + Return` — Buka terminal Kitty
+* `SUPER + Space` — Buka aplikasi via Rofi
+* `SUPER + Q` — Tutup jendela aktif
+* `SUPER + F` — Toggle fullscreen
+* `SUPER + V` — Toggle floating window
+* `SUPER + H / J / K / L` — Pindah fokus jendela bergaya Vim
+* `SUPER + 1..6` — Pindah workspace
