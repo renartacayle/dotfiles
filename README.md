@@ -54,6 +54,12 @@ dotfiles/
 ├── rofi/                      # Modul Application Launcher
 │   └── .config/rofi/
 │       └── config.rasi        # Modern modal app/window switcher
+├── cava/                      # Modul Audio Visualizer
+│   └── .config/cava/
+│       └── config             # 60 FPS Catppuccin gradient equalizer
+├── hyprlock/                  # Modul Lockscreen Desktop
+│   └── .config/hypr/
+│       └── hyprlock.conf      # Minimalist clock & password lockscreen
 └── .gitignore                 # Filter secrets, swap files, & temporary states
 ```
 
