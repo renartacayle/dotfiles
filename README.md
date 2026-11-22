@@ -99,6 +99,9 @@ dotfiles/
 ├── hyprlock/                  # Wayland Screen Locker
 │   └── .config/hypr/
 │       └── hyprlock.conf      # Minimalist clock & animated password input
+├── desktop/                   # FreeDesktop Application Entries
+│   └── .local/share/applications/
+│       └── zenfocus.desktop   # Pomodoro & Deep Work application launcher
 └── .gitignore                 # Exclusion for secrets, local tokens, & cache files
 ```
 

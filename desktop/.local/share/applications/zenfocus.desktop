@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=ZenFocus
+GenericName=Pomodoro & Deep Work Timer
+Comment=Terminal-based Pomodoro and deep work session manager built with Go and Bubbletea
+Exec=zenfocus
+Icon=alarm-clock
+Terminal=true
+Type=Application
+Categories=Utility;Clock;
+Keywords=pomodoro;timer;focus;zen;bubbletea;
+StartupNotify=true
+StartupWMClass=zenfocus

@@ -23,7 +23,7 @@ log_error() { echo -e "${RED}[ERROR]${NC} $*"; }
 
 # Daftar default package yang akan distow jika argumen "all" atau kosong
 AVAILABLE_PACKAGES=("nvim" "tmux" "zsh" "starship" "git" "bin")
-OPTIONAL_PACKAGES=("hypr" "waybar" "alacritty" "kitty" "rofi" "cava" "hyprlock")
+OPTIONAL_PACKAGES=("hypr" "waybar" "alacritty" "kitty" "rofi" "cava" "hyprlock" "desktop")
 
 check_stow_installed() {
     if ! command -v stow >/dev/null 2>&1; then

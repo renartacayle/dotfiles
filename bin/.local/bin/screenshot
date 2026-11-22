@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Script: screenshot
+# Deskripsi: Alat tangkapan layar untuk Wayland (grim/slurp) dengan auto-clipboard
+# ==============================================================================
+
+set -euo pipefail
+
+TARGET_DIR="${HOME}/Pictures/Screenshots"
+mkdir -p "${TARGET_DIR}"
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+OUTPUT_FILE="${TARGET_DIR}/screenshot_${TIMESTAMP}.png"
+
+notify() {
+    local msg="$1"
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "Screenshot Utility" "${msg}" -i camera-photo
+    else
+        echo "[SCREENSHOT] ${msg}"
+    fi
+}
+
+mode="${1:-area}" # Pilihan mode: area, full, window
+
+if [ "${XDG_SESSION_TYPE:-}" = "wayland" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
+    case "${mode}" in
+        full)
+            grim "${OUTPUT_FILE}"
+            wl-copy < "${OUTPUT_FILE}"
+            notify "Layar penuh berhasil ditangkap: ${OUTPUT_FILE}"
+            ;;
+        area|*)
+            if command -v slurp >/dev/null 2>&1 && command -v grim >/dev/null 2>&1; then
+                GEOM=$(slurp)
+                if [ -n "${GEOM}" ]; then
+                    grim -g "${GEOM}" "${OUTPUT_FILE}"
+                    wl-copy < "${OUTPUT_FILE}"
+                    notify "Area terpilih disalin ke clipboard & disimpan: ${OUTPUT_FILE}"
+                else
+                    echo "Tangkapan layar dibatalkan."
+                    exit 0
+                fi
+            else
+                echo "grim atau slurp tidak ditemukan!"
+                exit 1
+            fi
+            ;;
+    esac
+else
+    # Fallback untuk sesi X11 jika maim/xclip terpasang
+    if command -v maim >/dev/null 2>&1 && command -v xclip >/dev/null 2>&1; then
+        case "${mode}" in
+            full)
+                maim "${OUTPUT_FILE}"
+                xclip -selection clipboard -t image/png < "${OUTPUT_FILE}"
+                notify "Layar penuh disalin ke clipboard & disimpan: ${OUTPUT_FILE}"
+                ;;
+            area|*)
+                maim -s "${OUTPUT_FILE}"
+                xclip -selection clipboard -t image/png < "${OUTPUT_FILE}"
+                notify "Area terpilih disalin ke clipboard: ${OUTPUT_FILE}"
+                ;;
+        esac
+    else
+        echo "Utilitas screenshot Wayland (grim+slurp) atau X11 (maim+xclip) belum terpasang."
+        exit 1
+    fi
+fi

@@ -33,3 +33,16 @@ alias glog="git log --oneline --graph --decorate --all"
 # Dotfiles helper
 alias dotfiles="cd \$HOME/dotfiles || cd \$HOME/.gemini/antigravity/scratch/dotfiles"
 alias dotstow="bash \$HOME/.gemini/antigravity/scratch/dotfiles/scripts/stow.sh all"
+
+# Deep Work & Productivity
+alias focus="zenfocus"
+alias pomo="zenfocus"
+alias mcp="git-nexus-mcp"
+
+# Workspace Quick Navigation
+alias ws="cd \$HOME/.gemini/antigravity/scratch"
+alias cddot="cd \$HOME/.gemini/antigravity/scratch/dotfiles"
+alias cdzen="cd \$HOME/.gemini/antigravity/scratch/zenfocus"
+alias cdmcp="cd \$HOME/.gemini/antigravity/scratch/git-nexus-mcp"
+alias cdport="cd \$HOME/.gemini/antigravity/scratch/renartacayle.github.io"
+
