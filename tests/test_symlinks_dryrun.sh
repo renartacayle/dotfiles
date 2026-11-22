@@ -20,7 +20,7 @@ log_fail() { echo -e "${RED}[FAIL]${NC} $*"; }
 
 log_info "Memulai validasi struktur paket dotfiles (Dry-Run Engine)..."
 
-PACKAGES=("nvim" "tmux" "zsh" "starship" "kitty" "hypr" "waybar" "rofi" "cava" "hyprlock")
+PACKAGES=("nvim" "tmux" "zsh" "starship" "kitty" "alacritty" "hypr" "waybar" "rofi" "cava" "hyprlock")
 TOTAL_FILES=0
 FAILED=0
 

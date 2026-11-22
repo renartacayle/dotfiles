@@ -161,6 +161,11 @@ main() {
     install_starship
     install_tpm
 
+    # Pemasangan Font & Icon Assets
+    if [ -f "${SCRIPT_DIR}/install_fonts.sh" ]; then
+        bash "${SCRIPT_DIR}/install_fonts.sh" || log_warn "Instalasi font dilewati atau gagal secara non-fatal."
+    fi
+
     # 1. Jalankan Backup Aman
     log_info "Langkah 1/2: Menjalankan cadangan konfigurasi lama..."
     bash "${SCRIPT_DIR}/backup.sh"

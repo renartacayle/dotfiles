@@ -17,6 +17,7 @@ dotfiles/
 │   └── run_test.sh            # Local test runner (Docker / Podman)
 ├── scripts/
 │   ├── install.sh             # Idempotent cross-distro bootstrap installer
+│   ├── install_fonts.sh       # Auto-installer JetBrainsMono Nerd Font & Papirus Icons
 │   ├── backup.sh              # Safe backup (zero overwrite/data-loss)
 │   └── stow.sh                # Wrapper symlink GNU Stow
 ├── nvim/                      # Modul Neovim IDE
@@ -44,6 +45,9 @@ dotfiles/
 ├── kitty/                     # Modul Terminal Emulator GPU
 │   └── .config/kitty/
 │       └── kitty.conf         # JetBrainsMono Nerd Font & Catppuccin styling
+├── alacritty/                 # Modul Terminal Emulator Minimalis
+│   └── .config/alacritty/
+│       └── alacritty.toml     # Konfigurasi TOML & palet Catppuccin Mocha
 ├── hypr/                      # Modul Wayland Window Manager
 │   └── .config/hypr/
 │       └── hyprland.conf      # Smooth bezier animations, vim navigation & dual gaps
