@@ -20,6 +20,13 @@ dotfiles/
 │   ├── install_fonts.sh       # Auto-installer JetBrainsMono Nerd Font & Papirus Icons
 │   ├── backup.sh              # Safe backup (zero overwrite/data-loss)
 │   └── stow.sh                # Wrapper symlink GNU Stow
+├── git/                       # Modul Git Global
+│   └── .gitconfig             # Delta syntax pager, safe aliases, auto-rebase
+├── bin/                       # Modul Custom CLI Utilities (masuk ke $PATH)
+│   └── .local/bin/
+│       ├── sysinfo            # Dashboard status CPU/RAM/Disk/IP instan
+│       ├── screenshot         # Wayland screenshot utility (grim + slurp)
+│       └── git-cleanup        # Pembersih branch lokal & gone tracking
 ├── nvim/                      # Modul Neovim IDE
 │   └── .config/nvim/
 │       ├── init.lua           # Entrypoint utama

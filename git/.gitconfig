@@ -1,0 +1,63 @@
+# ==============================================================================
+# Git Global Configuration
+# ==============================================================================
+
+[user]
+    # Silakan ubah nama dan email sesuai identitas GitHub Anda
+    name = Developer
+    email = developer@example.com
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = nvim
+    autocrlf = input
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    light = false
+    line-numbers = true
+    side-by-side = false
+    syntax-theme = "Catppuccin-mocha"
+    features = decorations
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+
+[alias]
+    st = status -sb
+    co = checkout
+    br = branch
+    ci = commit
+    cm = commit -m
+    ca = commit --amend --no-edit
+    cp = cherry-pick
+    df = diff
+    dfc = diff --cached
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    last = log -1 HEAD --stat
+    unstage = reset HEAD --
+    undo = reset --soft HEAD~1
+    discard = checkout --
+    prune-branches = "!git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
+
+[pull]
+    rebase = true
+
+[push]
+    autoSetupRemote = true
+    default = current
+
+[merge]
+    conflictstyle = diff3
+
+[credential]
+    helper = cache --timeout=3600
