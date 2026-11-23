@@ -41,6 +41,7 @@ alias mcp="git-nexus-mcp"
 alias sentinel="sentinel-mcp"
 alias vanguard="~/.local/bin/vanguard"
 alias vg="~/.local/bin/vanguard"
+alias aegis="~/.local/bin/aegis"
 
 # Workspace Quick Navigation
 alias ws="cd $HOME/.gemini/antigravity/scratch"
@@ -49,5 +50,6 @@ alias cdzen="cd $HOME/.gemini/antigravity/scratch/zenfocus"
 alias cdmcp="cd $HOME/.gemini/antigravity/scratch/git-nexus-mcp"
 alias cdsentinel="cd $HOME/.gemini/antigravity/scratch/sentinel-mcp"
 alias cdvanguard="cd $HOME/.gemini/antigravity/scratch/vanguard-tui"
+alias cdaegis="cd $HOME/.gemini/antigravity/scratch/aegis-cli"
 alias cdport="cd $HOME/.gemini/antigravity/scratch/renartacayle.github.io"
 
